@@ -39,12 +39,12 @@ class AbstractMelonOrder():
 
 class GovernmentMelonOrder(AbstractMelonOrder):
     """Security inspection for melons"""
-    order_type = "goverment"
-    tax = 0.00
-   
+
     def __init__(self, species, qty):
         """Initialize security inspection"""
         super().__init__(species, qty)
+        self.order_type = "goverment"
+        self.tax = 0.00
         self.passed_inspection = False
 
     def mark_inspection(self, passed):
@@ -59,14 +59,12 @@ class DomesticMelonOrder(AbstractMelonOrder):
     tax = 0.08
 
 class InternationalMelonOrder(AbstractMelonOrder):
-    """An international (non-US) melon order."""
-    #country_code = "not set"
-    order_type = "international"
-    tax = 0.17
-    additional_international_tax = 3
-   
+    """An international (non-US) melon order.""" 
     def __init__(self, species, qty, country_code):
         super().__init__(species, qty)
+        self.order_type = "international"
+        self.tax = 0.17
+        self.additional_international_tax = 3
         self.shipped = False
         self.country_code = country_code
 
