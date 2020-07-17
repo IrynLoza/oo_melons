@@ -37,6 +37,22 @@ class AbstractMelonOrder():
 
         self.shipped = True       
 
+class GovernmentMelonOrder(AbstractMelonOrder):
+    """Security inspection for melons"""
+    order_type = "goverment"
+    tax = 0.00
+   
+    def __init__(self, species, qty):
+        """Initialize security inspection"""
+        super().__init__(species, qty)
+        self.passed_inspection = False
+
+    def mark_inspection(self, passed):
+        """Record the fact than an order has passed the inspection."""
+
+        self.passed_inspection = passed
+
+
 class DomesticMelonOrder(AbstractMelonOrder):
     """A melon order within the USA."""
     order_type = "domestic"
@@ -58,10 +74,6 @@ class InternationalMelonOrder(AbstractMelonOrder):
         """Return the country code."""
 
         return self.country_code
-
-
-
-
 
 
 # class DomesticMelonOrder():
