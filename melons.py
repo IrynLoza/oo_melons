@@ -50,8 +50,7 @@ class InternationalMelonOrder(AbstractMelonOrder):
     additional_international_tax = 3
    
     def __init__(self, species, qty, country_code):
-        self.species = species
-        self.qty = qty
+        super().__init__(species, qty)
         self.shipped = False
         self.country_code = country_code
 
