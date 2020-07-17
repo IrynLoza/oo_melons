@@ -8,17 +8,29 @@ class AbstractMelonOrder():
         self.species = species
         self.qty = qty
         self.shipped = False
-        #self.tax = 'not set'
-        #self.order_type = 'not set'
-
 
     def get_total(self):
         """Calculate price, including tax."""
 
         base_price = 5
-        total = (1 + self.tax) * self.qty * base_price
+        christmas_melon_price = base_price * 1.5
+           
+        if self.order_type == "international" and self.qty < 10:
+            if self.species == "Christmas melons":
+                total = (1 + self.tax) * self.qty * christmas_melon_price + self.additional_international_tax
+                return total
+            else:
+                total = (1 + self.tax) * self.qty * base_price + self.additional_international_tax
+                return total
 
-        return total 
+        if self.order_type == "domestic":
+            if self.species == "Christmas melons":
+                total = (1 + self.tax) * self.qty * christmas_melon_price
+                return total
+            else:
+                total = (1 + self.tax) * self.qty * base_price
+                return total   
+
 
     def mark_shipped(self):
         """Record the fact than an order has been shipped."""
@@ -30,8 +42,24 @@ class DomesticMelonOrder(AbstractMelonOrder):
     order_type = "domestic"
     tax = 0.08
 
-# class InternationalMelonOrder(AbstractMelonOrder):
-#     """An international (non-US) melon order."""
+class InternationalMelonOrder(AbstractMelonOrder):
+    """An international (non-US) melon order."""
+    #country_code = "not set"
+    order_type = "international"
+    tax = 0.17
+    additional_international_tax = 3
+   
+    def __init__(self, species, qty, country_code):
+        self.species = species
+        self.qty = qty
+        self.shipped = False
+        self.country_code = country_code
+
+    def get_country_code(self):
+        """Return the country code."""
+
+        return self.country_code
+
 
 
 
